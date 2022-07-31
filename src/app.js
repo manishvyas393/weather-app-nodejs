@@ -6,6 +6,7 @@ const hbs = require("hbs")
 const geoCode = require("./utils/geocode")
 const foreCast = require("./utils/forecast")
 
+const port = process.env.PORT || 4000
 const publicDir = path.join(__dirname, "../public")
 const viewsPath = path.join(__dirname, "../templates/views")
 const partialsPath = path.join(__dirname, "../templates/partials")
@@ -39,18 +40,18 @@ app.get("/weather", (req, res) => {
                   error: "please provide location"
             })
       }
-      geoCode(req.query.address, (error, { latitude, longitude, location }={}) => {
+      geoCode(req.query.address, (error, { latitude, longitude, location } = {}) => {
             if (error) {
                   return res.send({ error })
             }
             foreCast(latitude, longitude, (error, foreCastData) => {
                   if (error) {
-                        return res.send({error})
+                        return res.send({ error })
                   }
                   res.send({
                         forecast: foreCastData,
                         location,
-                        address:req.query.address
+                        address: req.query.address
                   })
             })
       })
@@ -70,4 +71,4 @@ app.get("*", (req, res) => {
             message: "The page you are looking cannot be found"
       })
 })
-app.listen(4000, () => console.log("started"))
+app.listen(port, () => console.log(`server running on ${port}`))
