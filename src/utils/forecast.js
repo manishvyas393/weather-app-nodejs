@@ -9,7 +9,7 @@ const foreCast = (latitude, longitude, callback) => {
                   callback("Please specify a valid location", undefined)
             }
             else {
-                  callback(undefined, body.current.weather_descriptions[0] + ". It is currently " + body.current.temperature + " degress out.")
+                  callback(undefined, body.current.weather_descriptions[0] + ". It is currently " + body.current.temperature + " degress out. And Humidity is "+body.current.humidity+"%")
             }
       })
 }
